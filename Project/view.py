@@ -35,12 +35,17 @@ class MainWindow(object):
 class CreateCallWindow(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(379, 149)
+        Form.resize(347, 211)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
-        self.label = QtWidgets.QLabel(Form)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.comboBox = QtWidgets.QComboBox(Form)
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.gridLayout.addWidget(self.comboBox, 5, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setObjectName("pushButton")
+        self.gridLayout.addWidget(self.pushButton, 7, 0, 1, 1, QtCore.Qt.AlignHCenter)
         self.lineEdit = QtWidgets.QLineEdit(Form)
         self.lineEdit.setObjectName("lineEdit")
         self.gridLayout.addWidget(self.lineEdit, 1, 0, 1, 1)
@@ -53,11 +58,11 @@ class CreateCallWindow(object):
         self.label_3 = QtWidgets.QLabel(Form)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 4, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        self.comboBox = QtWidgets.QComboBox(Form)
-        self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.gridLayout.addWidget(self.comboBox, 5, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem, 6, 0, 1, 1)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -65,11 +70,12 @@ class CreateCallWindow(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "Адрес"))
-        self.label_2.setText(_translate("Form", "Причина"))
-        self.label_3.setText(_translate("Form", "Важность"))
         self.comboBox.setItemText(0, _translate("Form", "Неотложная помощь"))
         self.comboBox.setItemText(1, _translate("Form", "Экстренная перевозка"))
+        self.pushButton.setText(_translate("Form", "Сделать вызов"))
+        self.label_2.setText(_translate("Form", "Причина"))
+        self.label_3.setText(_translate("Form", "Важность"))
+        self.label.setText(_translate("Form", "Адрес"))
 
 
 class CallsWindow(object):
