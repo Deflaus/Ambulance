@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel, QApplication, QTableWidgetItem
+from PyQt5.QtGui import QPixmap
 import sys
 import datetime
-from view import MainWindow, CreateCallWindow, CallsWindow, BrigadeWindow
+from view import MainWindow, CreateCallWindow, CallsWindow, BrigadeWindow, Map
 from dbaccess import DataBaseAccess
 
 def startMainW():
@@ -21,6 +22,8 @@ def startBrigadeW():
     BrigadeForm.show()
     PrintTableBrigade()
 
+def startMapW():
+    MapForm.show()
 
 def PushBtnCreateCall():
     today = datetime.datetime.today()
@@ -49,6 +52,12 @@ def PrintTableBrigade():
             element.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             brigadeW.tableWidget.setItem(i, j, element)
 
+
+def PrintMap():
+    pixmap = QPixmap("Map.jpg")
+
+
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
 
@@ -56,16 +65,18 @@ if __name__ == '__main__':
     CreateCallForm = QtWidgets.QWidget()
     CallsForm = QtWidgets.QWidget()
     BrigadeForm = QtWidgets.QWidget()
+    MapForm = QtWidgets.QWidget()
 
     mainW = MainWindow()
     createCallW = CreateCallWindow()
     callsW = CallsWindow()
     brigadeW = BrigadeWindow()
+    mapW = Map()
 
     mainW.setupUi(MainForm)
     mainW.pushButton.clicked.connect(startCreatCallW)
     mainW.pushButton_2.clicked.connect(startCallsW)
-#mainW.pushButton_3.clicked.connect()
+    mainW.pushButton_3.clicked.connect(startMapW)
     mainW.pushButton_4.clicked.connect(startBrigadeW)
 
     createCallW.setupUi(CreateCallForm)
@@ -74,6 +85,8 @@ if __name__ == '__main__':
     callsW.setupUi(CallsForm)
 
     brigadeW.setupUi(BrigadeForm)
+
+    mapW.setupUi(MapForm)
 
     startMainW()
 

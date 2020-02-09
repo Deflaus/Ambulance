@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
-
+from PyQt5.QtWidgets import QHBoxLayout, QWidget, QLabel
+from PyQt5.QtGui import QPixmap
 
 class MainWindow(object):
     def setupUi(self, Form):
@@ -81,13 +82,13 @@ class CreateCallWindow(object):
 class CallsWindow(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(635, 241)
+        Form.resize(750, 241)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
         self.tableWidget = QtWidgets.QTableWidget(Form)
         self.tableWidget.setMinimumSize(QtCore.QSize(381, 0))
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(6)
+        self.tableWidget.setColumnCount(7)
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
@@ -101,6 +102,8 @@ class CallsWindow(object):
         self.tableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(6, item)
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Form)
@@ -120,6 +123,8 @@ class CallsWindow(object):
         item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("Form", "Важность"))
         item = self.tableWidget.horizontalHeaderItem(5)
+        item.setText(_translate("Form", "Бригада"))
+        item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("Form", "Маршрут"))
 
 
@@ -149,3 +154,48 @@ class BrigadeWindow(object):
         item.setText(_translate("Form", "№"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Form", "Адрес базы"))
+
+class Map(object):
+    def setupUi(self, Form):
+        self.hbox = QHBoxLayout()
+        self.pixmapBack = QPixmap("Map.png")
+        self.pixmap1 = QPixmap("адреса/Декабристов-1.png")
+        self.pixmap2 = QPixmap("адреса/СибгатаХакима-2.png")
+        self.pixmap3 = QPixmap("адреса/Четаева-3.png")
+
+        Form.setObjectName("Form")
+        Form.resize(651, 403)
+        self.gridLayout = QtWidgets.QGridLayout(Form)
+        self.gridLayout.setObjectName("gridLayout")
+        self.labelBack = QtWidgets.QLabel(Form)
+        self.label1 = QtWidgets.QLabel(Form)
+        self.label2 = QtWidgets.QLabel(Form)
+        self.label3 = QtWidgets.QLabel(Form)
+
+        self.labelBack.setPixmap(self.pixmapBack)
+        self.label1.setPixmap(self.pixmap1)
+        self.label2.setPixmap(self.pixmap2)
+        self.label3.setPixmap(self.pixmap3)
+
+        self.hbox.addWidget(self.labelBack)
+        self.hbox.addWidget(self.label1)
+        self.hbox.addWidget(self.label2)
+        self.hbox.addWidget(self.label3)
+
+
+        self.labelBack.setObjectName("labelBack")
+        self.label1.setObjectName("label1")
+        self.label2.setObjectName("label2")
+        self.label3.setObjectName("label3")
+        self.gridLayout.addWidget(self.labelBack, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.label1, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.label2, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.label3, 0, 0, 1, 1)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+
