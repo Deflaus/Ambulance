@@ -44,8 +44,6 @@ def PushBtnCreateCall():
     createCallW.lineEdit_2.setText("")
 
 
-
-
 def PrintTableBrigade():
     brigadeW.tableWidget.setColumnCount(2)
     brigadeW.tableWidget.setRowCount(3)
@@ -62,9 +60,44 @@ def PrintMap():
     pixmap = QPixmap("Map.jpg")
 
 
-def PrintWay():
-    wayW.pixmapBack = QPixmap("")
+def EvPrintWay():
+    numberB = callsW.tableWidget.item(callsW.tableWidget.currentRow(), 4)
+    addOfCall = callsW.tableWidget.item(callsW.tableWidget.currentRow(), 2)
+    PrintWay(numberB.text(), addOfCall.text())
+
+
+def PrintWay(numberB, addOfCall):
+    dataOfAdd = DataBaseAccess.parse_alldata_addresses()
+    dataOfBrig = DataBaseAccess.parse_alldata_brigade()
+
+    indAddC = 0
+    indAddB = 0
+
+    addOfBrig = 0
+
+    for i, row in enumerate(dataOfBrig):
+        if row[0] == numberB:
+            addOfBrig = row[1]
+    print(addOfBrig)
+    for i, row in enumerate(dataOfAdd):
+        if addOfBrig == row[0]:
+            indAddC = i
+        if addOfCall == row[0]:
+            indAddB = i
+
+    image = ""
+
+    if indAddB >= indAddC:
+        image = addOfBrig + "-" + addOfCall + ".png"
+    if indAddB < indAddC:
+        image = addOfCall + "-" + addOfBrig+ ".png"
+    print(3)
+    print(image)
+
+    wayW.setupUi(WayForm, image)
+
     WayForm.show()
+
 
 def SolveTask(addOfCall):
     dataOfDist = DataBaseAccess.parse_alldata_distance()
@@ -76,7 +109,6 @@ def SolveTask(addOfCall):
     indAddOfBrig = [0]*3
     indAddOfCall = 0
     dist = [0]*3
-    way = [0]*3
 
     for i, row in enumerate(dataOfBrig):
         addOfBrig[i] = row[1]
@@ -92,7 +124,6 @@ def SolveTask(addOfCall):
         for k, j in enumerate(indAddOfBrig):
             if (row[0] == int(str(j) + str(indAddOfCall))) or (row[0] == int(str(indAddOfCall) + str(j))):
                 dist[k] = row[1]
-                way[k] = row[0]
 
     mindist = dist[0]
     for i in range(1, 3):
@@ -129,9 +160,8 @@ def PrinTableCalls():
         element = QTableWidgetItem(str(SolveTask(addressOfCall) + 1))
         callsW.tableWidget.setItem(i, j + 1, element)
         pushbutton = QtWidgets.QPushButton()
-        pushbutton.clicked.connect(PrintWay)
+        pushbutton.clicked.connect(EvPrintWay)
         callsW.tableWidget.setCellWidget(i, j + 2, pushbutton)
-
 
 
 if __name__ == '__main__':
@@ -143,6 +173,7 @@ if __name__ == '__main__':
     BrigadeForm = QtWidgets.QWidget()
     MapForm = QtWidgets.QWidget()
     WayForm = QtWidgets.QWidget()
+
 
     mainW = MainWindow()
     createCallW = CreateCallWindow()
@@ -166,7 +197,7 @@ if __name__ == '__main__':
 
     mapW.setupUi(MapForm)
 
-    wayW.setupUi(WayForm)
+
 
     startMainW()
 

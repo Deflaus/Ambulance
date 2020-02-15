@@ -197,9 +197,9 @@ class Map(object):
 
 
 class Way(object):
-    def setupUi(self, Form):
+    def setupUi(self, Form, image):
         self.hbox = QHBoxLayout()
-        self.pixmapBack = QPixmap()
+        self.pixmapBack = QPixmap("маршруты/" + image)
 
         Form.setObjectName("Form")
         Form.resize(651, 403)
