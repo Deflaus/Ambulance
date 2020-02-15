@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QTableWidgetItem
-from PyQt5.QtGui import QPixmap
 import sys
 import datetime
 from view import MainWindow, CreateCallWindow, CallsWindow, BrigadeWindow, Map, Way
@@ -24,7 +23,17 @@ def startBrigadeW():
     PrintTableBrigade()
 
 def startMapW():
+    dataOfBrig = DataBaseAccess.parse_alldata_brigade()
+
+    addOfBrig = ['']*3
+
+    for row in dataOfBrig:
+        addOfBrig[row[0]-1] = row[1]
+
     MapForm.show()
+
+    PrintMap(addOfBrig[0], addOfBrig[1], addOfBrig[2])
+
 
 def PushBtnCreateCall():
     today = datetime.datetime.today()
@@ -56,8 +65,11 @@ def PrintTableBrigade():
             brigadeW.tableWidget.setItem(i, j, element)
 
 
-def PrintMap():
-    pixmap = QPixmap("Map.jpg")
+def PrintMap(add1, add2, add3):
+    image1 = "адреса/" + add1 + "-1.png"
+    image2 = "адреса/" + add2 + "-2.png"
+    image3 = "адреса/" + add3 + "-3.png"
+    mapW.refresh(image1, image2, image3)
 
 
 def EvPrintWay():
@@ -67,18 +79,19 @@ def EvPrintWay():
 
 
 def PrintWay(numberB, addOfCall):
+
     dataOfAdd = DataBaseAccess.parse_alldata_addresses()
     dataOfBrig = DataBaseAccess.parse_alldata_brigade()
 
     indAddC = 0
     indAddB = 0
 
-    addOfBrig = 0
+    addOfBrig = " "
 
-    for i, row in enumerate(dataOfBrig):
-        if row[0] == numberB:
+    for row in dataOfBrig:
+        if str(numberB) == str(row[0]):
             addOfBrig = row[1]
-    print(addOfBrig)
+
     for i, row in enumerate(dataOfAdd):
         if addOfBrig == row[0]:
             indAddC = i
@@ -91,10 +104,8 @@ def PrintWay(numberB, addOfCall):
         image = addOfBrig + "-" + addOfCall + ".png"
     if indAddB < indAddC:
         image = addOfCall + "-" + addOfBrig+ ".png"
-    print(3)
-    print(image)
 
-    wayW.setupUi(WayForm, image)
+    wayW.refresh(image)
 
     WayForm.show()
 
@@ -174,7 +185,6 @@ if __name__ == '__main__':
     MapForm = QtWidgets.QWidget()
     WayForm = QtWidgets.QWidget()
 
-
     mainW = MainWindow()
     createCallW = CreateCallWindow()
     callsW = CallsWindow()
@@ -197,9 +207,8 @@ if __name__ == '__main__':
 
     mapW.setupUi(MapForm)
 
-
+    wayW.setupUi(WayForm)
 
     startMainW()
-
 
     sys.exit(app.exec_())

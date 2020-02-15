@@ -155,9 +155,9 @@ class Map(object):
     def setupUi(self, Form):
         self.hbox = QHBoxLayout()
         self.pixmapBack = QPixmap("Map.png")
-        self.pixmap1 = QPixmap("адреса/Декабристов-1.png")
-        self.pixmap2 = QPixmap("адреса/СибгатаХакима-2.png")
-        self.pixmap3 = QPixmap("адреса/Четаева-3.png")
+        self.pixmap1 = QPixmap()
+        self.pixmap2 = QPixmap()
+        self.pixmap3 = QPixmap()
 
         Form.setObjectName("Form")
         Form.resize(651, 403)
@@ -183,13 +183,32 @@ class Map(object):
         self.label1.setObjectName("label1")
         self.label2.setObjectName("label2")
         self.label3.setObjectName("label3")
-        self.gridLayout.addWidget(self.labelBack, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.labelBack)
+        self.gridLayout.addWidget(self.label1)
+        self.gridLayout.addWidget(self.label2)
+        self.gridLayout.addWidget(self.label3)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def refresh(self, add1, add2, add3):
+
+        self.pixmap1 = QPixmap(add1)
+        self.pixmap2 = QPixmap(add2)
+        self.pixmap3 = QPixmap(add3)
+
+        self.label1.setPixmap(self.pixmap1)
+        self.label2.setPixmap(self.pixmap2)
+        self.label3.setPixmap(self.pixmap3)
+
+        self.hbox.addWidget(self.label1)
+        self.hbox.addWidget(self.label2)
+        self.hbox.addWidget(self.label3)
+
         self.gridLayout.addWidget(self.label1, 0, 0, 1, 1)
         self.gridLayout.addWidget(self.label2, 0, 0, 1, 1)
         self.gridLayout.addWidget(self.label3, 0, 0, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -197,26 +216,31 @@ class Map(object):
 
 
 class Way(object):
-    def setupUi(self, Form, image):
+    def setupUi(self, Form):
         self.hbox = QHBoxLayout()
-        self.pixmapBack = QPixmap("маршруты/" + image)
+        self.pixmapBack = QPixmap()
 
         Form.setObjectName("Form")
         Form.resize(651, 403)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
-        self.labelBack = QtWidgets.QLabel(Form)
 
+        self.labelBack = QtWidgets.QLabel(Form)
         self.labelBack.setPixmap(self.pixmapBack)
 
         self.hbox.addWidget(self.labelBack)
 
-
         self.labelBack.setObjectName("labelBack")
-        self.gridLayout.addWidget(self.labelBack, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.labelBack)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def refresh(self, image):
+        self.pixmapBack = QPixmap("маршруты/" + image)
+        self.labelBack.setPixmap(self.pixmapBack)
+        self.hbox.addWidget(self.labelBack)
+        self.gridLayout.addWidget(self.labelBack)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
