@@ -13,28 +13,26 @@ class DataBaseAccess:
 
             cur.execute('INSERT INTO calls VALUES("' + date + '","' + cause + '","' + address + '",' + priority + ') ')
             con.commit()
-
-            cur.close()
-            con.close()
         except:
             pass
+        finally:
+            cur.close()
+            con.close()
 
     @staticmethod
-    def parse_alldata_brigade():
+    def count_of_calls():
         try:
             con = sqlite3.connect(DataBaseAccess.db)
             cur = con.cursor()
 
-            cur.execute('SELECT * FROM brigade')
-
+            cur.execute('SELECT COUNT(*) FROM calls')
             data = cur.fetchall()
-
-            cur.close()
-            con.close()
-
-            return data
         except:
             pass
+        finally:
+            cur.close()
+            con.close()
+            return data[0][0]
 
     @staticmethod
     def parse_alldata_calls():
@@ -45,28 +43,13 @@ class DataBaseAccess:
             cur.execute('SELECT * FROM calls')
 
             data = cur.fetchall()
-
+        except:
+            pass
+        finally:
             cur.close()
             con.close()
 
             return data
-        except:
-            pass
-
-    @staticmethod
-    def count_of_calls():
-        try:
-            con = sqlite3.connect(DataBaseAccess.db)
-            cur = con.cursor()
-
-            cur.execute('SELECT COUNT(*) FROM calls')
-            data = cur.fetchall()
-
-            cur.close()
-            con.close()
-            return data[0][0]
-        except:
-            pass
 
     @staticmethod
     def parse_alldata_addresses():
@@ -77,13 +60,13 @@ class DataBaseAccess:
             cur.execute('SELECT * FROM addresses')
 
             data = cur.fetchall()
-
+        except:
+            pass
+        finally:
             cur.close()
             con.close()
 
             return data
-        except:
-            pass
 
     @staticmethod
     def parse_alldata_distance():
@@ -94,13 +77,30 @@ class DataBaseAccess:
             cur.execute('SELECT * FROM distance')
 
             data = cur.fetchall()
-
+        except:
+            pass
+        finally:
             cur.close()
             con.close()
 
             return data
+
+    @staticmethod
+    def parse_alldata_brigade():
+        try:
+            con = sqlite3.connect(DataBaseAccess.db)
+            cur = con.cursor()
+
+            cur.execute('SELECT * FROM brigade')
+
+            data = cur.fetchall()
         except:
             pass
+        finally:
+            cur.close()
+            con.close()
+
+            return data
 
     @staticmethod
     def swap_address_brigade(number, oldAdd, newAdd):
@@ -110,13 +110,14 @@ class DataBaseAccess:
 
             cur.execute('DELETE FROM brigade WHERE AddressOfBrig = "' + str(oldAdd) + '"')
             con.commit()
-
+        except:
+            pass
+        finally:
             cur.close()
             con.close()
 
             DataBaseAccess.insert_brigade(number, newAdd)
-        except:
-            print("err1")
+
 
     @staticmethod
     def insert_brigade(number, add):
@@ -126,9 +127,10 @@ class DataBaseAccess:
             print(number)
             print(add)
             cur.execute('INSERT INTO brigade VALUES( ' + str(number) + ', "' + str(add) + '")')
+        except:
+            pass
+        finally:
             con.commit()
 
             cur.close()
             con.close()
-        except:
-            print("err2")

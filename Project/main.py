@@ -5,6 +5,7 @@ import datetime
 from view import MainWindow, CreateCallWindow, CallsWindow, BrigadeWindow, Map, Way
 from dbaccess import DataBaseAccess
 
+
 def startMainW():
     MainForm.show()
 
@@ -21,6 +22,7 @@ def startCallsW():
 def startBrigadeW():
     BrigadeForm.show()
     PrintTableBrigade()
+
 
 def startMapW():
     dataOfBrig = DataBaseAccess.parse_alldata_brigade()

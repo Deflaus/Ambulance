@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QHBoxLayout, QWidget, QLabel
+from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtGui import QPixmap
+
 
 class MainWindow(object):
     def setupUi(self, Form):
@@ -151,6 +152,7 @@ class BrigadeWindow(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Form", "Текущий адрес"))
 
+
 class Map(object):
     def setupUi(self, Form):
         self.hbox = QHBoxLayout()
@@ -160,7 +162,6 @@ class Map(object):
         self.pixmap3 = QPixmap()
 
         Form.setObjectName("Form")
-        Form.resize(651, 403)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
         self.labelBack = QtWidgets.QLabel(Form)
@@ -221,7 +222,6 @@ class Way(object):
         self.pixmapBack = QPixmap()
 
         Form.setObjectName("Form")
-        Form.resize(651, 403)
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
 
