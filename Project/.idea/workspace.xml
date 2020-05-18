@@ -26,6 +26,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/untitled" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.main">
@@ -100,6 +101,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1581789984795" />
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1586354960698">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586354960698" />
     <state width="1344" height="109" key="GridCell.Tab.0.bottom" timestamp="1581856411621">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -136,10 +141,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1581105091861" />
-    <state x="378" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1581854678780">
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1586354912440">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1581854678780" />
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586354912440" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1581790019949">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
