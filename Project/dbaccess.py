@@ -6,12 +6,13 @@ class DataBaseAccess:
     db = "Ambulance.db"
 
     @staticmethod
-    def insert_call(date, cause, address, priority):
+    def insert_call(date, cause, address, priority, id, addid):
         try:
             con = sqlite3.connect(DataBaseAccess.db)
             cur = con.cursor()
 
-            cur.execute('INSERT INTO calls VALUES("' + date + '","' + cause + '","' + address + '",' + priority + ') ')
+            cur.execute('INSERT INTO calls VALUES("' + date + '","' + cause + '","' + address + '",' + priority + ','
+                        + id + ', "' + addid + '") ')
             con.commit()
         except:
             pass
@@ -103,34 +104,15 @@ class DataBaseAccess:
             return data
 
     @staticmethod
-    def swap_address_brigade(number, oldAdd, newAdd):
+    def swap_address_brigade(number, newAdd):
         try:
             con = sqlite3.connect(DataBaseAccess.db)
             cur = con.cursor()
 
-            cur.execute('DELETE FROM brigade WHERE AddressOfBrig = "' + str(oldAdd) + '"')
+            cur.execute('UPDATE brigade SET AddressOfBrig = "' + str(newAdd) + '" WHERE NumOfBrig = ' + str(number) + '')
             con.commit()
         except:
             pass
         finally:
-            cur.close()
-            con.close()
-
-            DataBaseAccess.insert_brigade(number, newAdd)
-
-
-    @staticmethod
-    def insert_brigade(number, add):
-        try:
-            con = sqlite3.connect(DataBaseAccess.db)
-            cur = con.cursor()
-            print(number)
-            print(add)
-            cur.execute('INSERT INTO brigade VALUES( ' + str(number) + ', "' + str(add) + '")')
-        except:
-            pass
-        finally:
-            con.commit()
-
             cur.close()
             con.close()

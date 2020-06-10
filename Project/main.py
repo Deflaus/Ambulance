@@ -6,6 +6,9 @@ from view import MainWindow, CreateCallWindow, CallsWindow, BrigadeWindow, Map, 
 from dbaccess import DataBaseAccess
 
 
+oldAdd = [' ']*3
+
+
 def startMainW():
     MainForm.show()
 
@@ -39,13 +42,14 @@ def startMapW():
 
 def PushBtnCreateCall():
     today = datetime.datetime.today()
+    data = DataBaseAccess.parse_alldata_brigade()
 
     date = today.strftime("%d-%m-%Y / %H:%M:%S")
     cause = createCallW.lineEdit_2.text()
     address = createCallW.lineEdit.text()
     priority = str(createCallW.comboBox.currentIndex() + 1)
-
-    DataBaseAccess.insert_call(date, cause, address, priority)
+    id = SolveTask(address)
+    DataBaseAccess.insert_call(date, cause, address, priority, str(id + 1), data[id][1])
 
     SwapAddBrig(createCallW.lineEdit.text())
 
@@ -75,36 +79,33 @@ def PrintMap(add1, add2, add3):
 
 
 def EvPrintWay():
-    numberB = callsW.tableWidget.item(callsW.tableWidget.currentRow(), 4)
+    row = callsW.tableWidget.currentRow()
     addOfCall = callsW.tableWidget.item(callsW.tableWidget.currentRow(), 2)
-    PrintWay(numberB.text(), addOfCall.text())
+    PrintWay(row, addOfCall.text())
 
 
-def PrintWay(numberB, addOfCall):
-
+def PrintWay(row, addOfCall):
     dataOfAdd = DataBaseAccess.parse_alldata_addresses()
-    dataOfBrig = DataBaseAccess.parse_alldata_brigade()
+    dataOfCalls = DataBaseAccess.parse_alldata_calls()
 
     indAddC = 0
     indAddB = 0
 
-    addOfBrig = " "
+    addOfBrig = dataOfCalls[row][5]
 
-    for row in dataOfBrig:
-        if str(numberB) == str(row[0]):
-            addOfBrig = row[1]
-
+    print(addOfBrig)
+    print(addOfCall)
     for i, row in enumerate(dataOfAdd):
         if addOfBrig == row[0]:
-            indAddC = i
-        if addOfCall == row[0]:
             indAddB = i
+        if addOfCall == row[0]:
+            indAddC = i
 
     image = ""
 
-    if indAddB >= indAddC:
-        image = addOfBrig + "-" + addOfCall + ".png"
     if indAddB < indAddC:
+        image = addOfBrig + "-" + addOfCall + ".png"
+    if indAddB >= indAddC:
         image = addOfCall + "-" + addOfBrig+ ".png"
 
     wayW.refresh(image)
@@ -127,7 +128,7 @@ def SolveTask(addOfCall):
         addOfBrig[i] = row[1]
 
     for j, row in enumerate(dataOfAdd):
-        for i in range(0,3):
+        for i in range(0, 3):
             if row[0] == addOfBrig[i]:
                 indAddOfBrig[i] = j + 1
         if row[0] == addOfCall:
@@ -150,31 +151,26 @@ def SolveTask(addOfCall):
 def SwapAddBrig(addOfCall):
     indBrig = SolveTask(addOfCall)
     dataOfBrig = DataBaseAccess.parse_alldata_brigade()
-    addOfBrig = [''] * 3
     for i, row in enumerate(dataOfBrig):
-        addOfBrig[i] = row[1]
-    DataBaseAccess.swap_address_brigade(dataOfBrig[indBrig][0], dataOfBrig[indBrig][1], addOfCall)
+        oldAdd[i] = row[1]
+    DataBaseAccess.swap_address_brigade(dataOfBrig[indBrig][0], addOfCall)
 
 
 def PrinTableCalls():
-    addressOfCall = ""
     callsW.tableWidget.setRowCount(DataBaseAccess.count_of_calls())
     data = DataBaseAccess.parse_alldata_calls()
     for i, row in enumerate(data):
         for j, col in enumerate(row):
-            if j == 2: addressOfCall = str(col)
             if j != 3:
                 element = QTableWidgetItem(str(col))
             else:
-                if col == 1:  element = QTableWidgetItem("Неотложная помощь")
-                if col == 2:  element = QTableWidgetItem("Экстренная перевозка")
+                if col == 1: element = QTableWidgetItem("Неотложная помощь")
+                if col == 2: element = QTableWidgetItem("Экстренная перевозка")
             element.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-            callsW.tableWidget.setItem(i, j, element)
-        element = QTableWidgetItem(str(SolveTask(addressOfCall) + 1))
-        callsW.tableWidget.setItem(i, j + 1, element)
+            if j != 5: callsW.tableWidget.setItem(i, j, element)
         pushbutton = QtWidgets.QPushButton()
         pushbutton.clicked.connect(EvPrintWay)
-        callsW.tableWidget.setCellWidget(i, j + 2, pushbutton)
+        callsW.tableWidget.setCellWidget(i, j, pushbutton)
 
 
 if __name__ == '__main__':
